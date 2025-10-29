@@ -1,8 +1,9 @@
 #  Import the random module to generate a random number 
 import random
+MAX_ATTEMPTS = 10
+NUMBER_RANGE = (1, 100)
 
-
-def guess_the_number(max_attempts = 10, number_range = (1, 100)):
+def guess_the_number(max_attempts = MAX_ATTEMPTS, number_range = NUMBER_RANGE):
     """ Runs one round of the 'Guess the Number' game.
     Generates a random number between 1 and 100.
     Prompts the player to guess, provides feedback and tracks attempts.
