@@ -1,11 +1,11 @@
 #  Import the random module to generate a random number 
 import random
-MAX_ATTEMPTS = 10
-NUMBER_RANGE = (1, 100)
+MAX_ATTEMPTS = 5
+NUMBER_RANGE = (1, 10)
 
 def guess_the_number(max_attempts = MAX_ATTEMPTS, number_range = NUMBER_RANGE):
     """ Runs one round of the 'Guess the Number' game.
-    Generates a random number between 1 and 100.
+    Accepts maximum attempts and number range as parameters.
     Prompts the player to guess, provides feedback and tracks attempts.
     Returns True if the player wins, False otherwise.
     """
@@ -15,7 +15,7 @@ def guess_the_number(max_attempts = MAX_ATTEMPTS, number_range = NUMBER_RANGE):
     attempts = 0
 
     # Game introduction
-    print("I am thinking of a number between 1 and 100.")
+    print(f"\nI am thinking of a number between {number_range[0]} and {number_range[1]}.")
     print(f"You have {max_attempts} attempts to guess the number.")
 
     # Loop until the user guesses the correct number or runs out of attempts
