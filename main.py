@@ -22,6 +22,21 @@ def set_difficulty() -> tuple[int, tuple[int, int]]:
         else:
             print("Invalid choice. Please select easy / medium / hard")
 
+def prompt__change_difficulty() -> bool:
+    """ Prompts the user to change difficulty level.
+    Returns True if the user wants to change, False otherwise.
+    """
+    while True:
+        change = input("Do you want to change the difficulty level for the next round? (yes/no): ").strip().lower()
+        if change == "yes":
+            return True
+        elif change == "no":
+            return False
+        else:
+            print("Please enter 'yes' or 'no'.")
+
+
+
 def guess_the_number(max_attempts: int, number_range: tuple[int, int]) -> bool:
     """ Runs one round of the 'Guess the Number' game.
     Accepts maximum attempts and number range as parameters.
@@ -72,6 +87,20 @@ def guess_the_number(max_attempts: int, number_range: tuple[int, int]) -> bool:
         print(f"Sorry, you've used all your attempts. The number was {number}.")
         return False  # Lost score
 
+# Replay prompt with input validation loop
+def prompt_replay() -> bool:
+    """ Prompts the user to play again or exit.
+    Returns True if the user wants to play again, False to exit."""
+    while True:
+            play_again = input("Do you want to play again? (yes/no): ").strip().lower()
+            if play_again == "yes":
+                return True
+            elif play_again == "no":
+                return False
+            else:
+                # Handle invalid input 
+                print("Please enter 'yes' or 'no'.")
+
 def play_game():
     """ Main loop for the 'Guess the Number' game. 
     Tracks the total games played and wins.
@@ -81,32 +110,24 @@ def play_game():
     # Initialise counters for statistics 
     games_played = 0
     wins = 0
+    current_difficulty = None
    
     while True:
-        # Set game difficulty and parameters
-        max_attempts, number_range = set_difficulty()
-        # Play one round and update statistics
+        if current_difficulty==None or prompt__change_difficulty():
+            current_difficulty = set_difficulty()
+        
+        max_attempts, number_range = current_difficulty
         won = guess_the_number(max_attempts= max_attempts, number_range=number_range)
         games_played += 1
         if won:
             wins += 1
         print(f"\n Games played: {games_played} | Wins: {wins}")
+          # Exit the game and show final statistics
+        if not prompt_replay():
+            print(f"\nFinal Score: {wins} wins out of {games_played} games played.")
+            print("Thanks for playing! Goodbye!")
+            break
       
-       # Replay prompt with input validation loop
-        while True:
-            play_again = input("Do you want to play again? (yes/no): ").strip().lower()
-            if play_again == "yes":
-                break # Continue to the next game
-            elif play_again == "no":
-                # Exit the game and show final statistics
-                print(f"\nFinal Score: {wins} wins out of {games_played} games played.")
-                print("Thanks for playing! Goodbye!")
-                return
-            else:
-                # Handle invalid input 
-                print("Please enter 'yes' or 'no'.")
-        
 # Entry point - run the game
 if __name__ == "__main__":
     play_game()
-    
