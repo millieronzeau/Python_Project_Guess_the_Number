@@ -1,9 +1,28 @@
 #  Import the random module to generate a random number 
 import random
-MAX_ATTEMPTS = 5
-NUMBER_RANGE = (1, 10)
 
-def guess_the_number(max_attempts = MAX_ATTEMPTS, number_range = NUMBER_RANGE):
+# Difficulty level settings 
+DIFFICULTY_LEVELS = {
+    "easy":(15, (1,50)),
+    "medium":(10, (1,100)),
+    "hard":(5, (1,100))
+}
+
+def set_difficulty() -> tuple[int, tuple[int, int]]:
+    """ Prompts the user to select a difficulty level.
+    Returns the corresponding max attempts and number range.
+    """
+    print("Select Difficulty Level: easy / medium / hard")
+    while True:
+        choice = input("Enter difficulty: ").strip().lower()
+        if choice in DIFFICULTY_LEVELS:
+            max_attempts, number_range = DIFFICULTY_LEVELS[choice]
+            print(f"You selected '{choice}' difficulty: {max_attempts} attempts, number range {number_range[0]} to {number_range[1]}.")
+            return max_attempts, number_range
+        else:
+            print("Invalid choice. Please select easy / medium / hard")
+
+def guess_the_number(max_attempts: int, number_range: tuple[int, int]) -> bool:
     """ Runs one round of the 'Guess the Number' game.
     Accepts maximum attempts and number range as parameters.
     Prompts the player to guess, provides feedback and tracks attempts.
@@ -62,11 +81,12 @@ def play_game():
     # Initialise counters for statistics 
     games_played = 0
     wins = 0
-
-    # Main game loop continuing until the user decides to exit
+   
     while True:
+        # Set game difficulty and parameters
+        max_attempts, number_range = set_difficulty()
         # Play one round and update statistics
-        won = guess_the_number()
+        won = guess_the_number(max_attempts= max_attempts, number_range=number_range)
         games_played += 1
         if won:
             wins += 1
@@ -89,3 +109,4 @@ def play_game():
 # Entry point - run the game
 if __name__ == "__main__":
     play_game()
+    
